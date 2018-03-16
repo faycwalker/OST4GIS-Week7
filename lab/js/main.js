@@ -21,11 +21,9 @@ var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{
 
 Load the dataset into our application. Set the 'dataset' variable to the address for
 'philadelphia-garbage-collection-boundaries.geojson' in the class dataset repository
-https://raw.githubusercontent.com/CPLN-692-401/datasets/master/geojson/philadelphia-garbage-collection-boundaries.geojson
+*/
 
-You should now have GeoJSON data projected onto your map!
-
-## Task 2 - our first choropleth map
+/*## Task 2 - our first choropleth map
 
 Style each garbage collection area with a different color depending on what day
 of the week garbage collection occurs. For example, all areas with Monday
@@ -125,11 +123,25 @@ of the application to report this information.
 
 ===================== */
 
-var dataset = ""
+var dataset = "https://raw.githubusercontent.com/CPLN-692-401/datasets/master/geojson/philadelphia-garbage-collection-boundaries.geojson";
 var featureGroup;
 
 var myStyle = function(feature) {
-  return {};
+  if (feature.properties.COLLDAY=="MON") {
+    return {fillColor: 'red'};
+  }
+  if (feature.properties.COLLDAY=="TUE") {
+    return {fillColor: 'yellow'};
+  }
+  if (feature.properties.COLLDAY=="WED") {
+    return {fillColor: 'green'};
+  }
+  if (feature.properties.COLLDAY=="THU") {
+    return {fillColor: 'orange'};
+  }
+  if (feature.properties.COLLDAY=="FRI") {
+    return {fillColor: 'purple'};
+  }
 };
 
 var showResults = function() {
@@ -145,8 +157,44 @@ var showResults = function() {
   $('#results').show();
 };
 
+//<h1 class="day-of-week">Day of Week</h1>
 
+/*
 var eachFeatureFunction = function(layer) {
+  layer.on ('click', function () {
+    if (layer.feature.properties.COLLDAY == "MON")
+    $('#weekday').text(Monday)
+  if (layer.feature.properties.COLLDAY == "TUE")
+    $('#weekday').text(Tuesday)
+  if (layer.feature.properties.COLLDAY == "WED")
+    $('#weekday').text(Wednesday)
+  if (layer.feature.properties.COLLDAY == "THU")
+    $('#weekday').text(Thursday)
+  if (layer.feature.properties.COLLDAY == "FRI")
+    $('#weekday').text(Friday)
+  });
+*/
+  var eachFeatureFunction = function(layer) {
+    layer.on('click', function (event) {
+      switch(layer.feature.properties.COLLDAY){
+        case 'MON':
+          $('.day-of-week').text('Monday');
+          console.log ('hello');
+          break;
+        case 'TUE':
+          $('.day-of-week').text('Tuesday');
+          break;
+        case 'WED':
+          $('.day-of-week').text('Wednesday');
+          break;
+        case 'THU':
+          $('.day-of-week').text('Thursday');
+          break;
+        case 'FRI':
+          $('.day-of-week').text('Friday');
+          break;
+  }
+/*
   layer.on('click', function (event) {
     /* =====================
     The following code will run every time a layer on the map is clicked.
@@ -157,9 +205,12 @@ var eachFeatureFunction = function(layer) {
     showResults();
   });
 };
+//  });
+//};
 
 var myFilter = function(feature) {
-  return true;
+  if (feature.properties.COLLDAY!=" ")
+    return true
 };
 
 $(document).ready(function() {

@@ -10,8 +10,8 @@ var selectValue = 'All';
 ===================== */
 // Notice that we've been using an options object since week 1 without realizing it
 var mapOpts = {
-  center: [0, 0],
-  zoom: 2
+  center: [40.8973, -98.5140],
+  zoom: 4
 };
 var map = L.map('map', mapOpts);
 
@@ -26,7 +26,7 @@ var tileOpts = {
 var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', tileOpts).addTo(map);
 
 // Ajax to grab json
-var getData = $.ajax('https://raw.githubusercontent.com/CPLN-692-401/datasets/master/json/world-country-capitals.json')
+var dataset = $.ajax("https://raw.githubusercontent.com/faycwalker/prisons/master/prisons2.json");
 
 /* =====================
   Parse and store data for later use
